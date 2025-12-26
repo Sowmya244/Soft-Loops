@@ -1,37 +1,120 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/* =========================
+   SOFT LOOPS – HERO CAROUSEL
+========================= */
 
-.hero {
+.sl-hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #f9f7f4; /* cream base */
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+/* Background images */
+.sl-hero-slide-bg {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
-.hero img {
-  object-fit: cover;
+.sl-hero-slide-bg img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+.sl-hero-slide-bg.is-active {
+  opacity: 1;
+}
+
+/* Soft overlay */
+.sl-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 15%),
+    rgb(0 0 0 / 35%)
+  );
+  z-index: 1;
+}
+
+/* Brand text (BIG & dreamy) */
+.sl-hero-brand {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sl-hero-brand h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(72px, 18vw, 280px);
+  letter-spacing: 0.28em;
+  color: #fff;
+  opacity: 0.95;
+  white-space: nowrap;
+}
+
+/* Slide content */
+.sl-hero-slides {
+  position: absolute;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 100%;
+  text-align: center;
+}
+
+/* Individual slide text */
+.sl-hero-slide {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  position: absolute;
+  width: 100%;
+}
+
+.sl-hero-slide.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Subheading */
+.sl-hero-slide p {
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  color: #fff;
+}
+
+/* CTA */
+.sl-hero-slide a {
+  display: inline-block;
+  padding: 14px 38px;
+  border-radius: 999px;
+  background: #fff;
+  color: #3b2f2f; /* soft brown */
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.sl-hero-slide a:hover {
+  transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (width <= 768px) {
+  .sl-hero-brand h1 {
+    font-size: clamp(56px, 22vw, 140px);
+    letter-spacing: 0.18em;
   }
 }
