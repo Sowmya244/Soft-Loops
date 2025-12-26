@@ -1,57 +1,67 @@
 export default function decorate(block) {
   block.classList.add('sl-hero');
 
-  const pictures = [...block.querySelectorAll('picture')];
   const rows = [...block.querySelectorAll(':scope > div')];
 
-  let brand = 'Soft Loops';
   const slides = [];
-
   let currentSlide = null;
 
   rows.forEach((row) => {
-    const cells = row.querySelectorAll('div');
-    if (cells.length < 2) return;
+    const cells = row.querySelectorAll(':scope > div');
 
-    const type = cells[0].textContent.trim().toLowerCase();
-    const valueEl = cells[1];
-
-    if (type === 'brand') {
-      brand = valueEl.textContent.trim();
+    // Empty row = slide separator
+    if (
+      cells.length === 2
+      && !cells[0].textContent.trim()
+      && !cells[1].textContent.trim()
+    ) {
+      currentSlide = null;
+      return;
     }
 
-    if (type === 'slide') {
-      currentSlide = {};
+    if (cells.length !== 2) return;
+
+    const picture = cells[0].querySelector('picture');
+    const contentCell = cells[1];
+
+    // Start a new slide when image is found
+    if (picture) {
+      currentSlide = {
+        picture,
+        title: '',
+        subheading: '',
+        cta: null,
+      };
       slides.push(currentSlide);
-    }
 
-    if (type === 'subheading' && currentSlide) {
-      currentSlide.subheading = valueEl.textContent.trim();
-    }
+      const texts = [...contentCell.children];
 
-    if (type === 'cta' && currentSlide) {
-      currentSlide.cta = valueEl.querySelector('a');
+      if (texts[0]) currentSlide.title = texts[0].textContent.trim();
+      if (texts[1]) currentSlide.subheading = texts[1].textContent.trim();
+      if (texts[2]) currentSlide.cta = texts[2].querySelector('a');
     }
   });
 
-  /* Background slides */
+  /* ---------- BUILD HERO ---------- */
+
+  /* Backgrounds */
   const bgWrap = document.createElement('div');
   bgWrap.className = 'sl-hero-bg';
 
-  pictures.forEach((pic, i) => {
+  slides.forEach((slide, i) => {
     const bg = document.createElement('div');
     bg.className = 'sl-hero-slide-bg';
     if (i === 0) bg.classList.add('is-active');
-    bg.append(pic);
+    bg.append(slide.picture);
     bgWrap.append(bg);
   });
 
-  /* Brand overlay */
+  /* Brand overlay (from first slide title) */
   const brandWrap = document.createElement('div');
   brandWrap.className = 'sl-hero-brand';
-  brandWrap.innerHTML = `<h1>${brand}</h1>`;
+  brandWrap.innerHTML = `<h1>${slides[0]?.title || 'Soft Loops'}</h1>`;
 
-  /* Slide content */
+  /* Slide text */
   const slidesWrap = document.createElement('div');
   slidesWrap.className = 'sl-hero-slides';
 
@@ -69,7 +79,8 @@ export default function decorate(block) {
   block.innerHTML = '';
   block.append(bgWrap, brandWrap, slidesWrap);
 
-  /* Carousel logic */
+  /* ---------- CAROUSEL ---------- */
+
   let index = 0;
   setInterval(() => {
     const bgSlides = bgWrap.querySelectorAll('.sl-hero-slide-bg');

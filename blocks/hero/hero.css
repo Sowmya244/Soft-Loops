@@ -53,12 +53,13 @@
 
 .sl-hero-brand h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(72px, 18vw, 280px);
-  letter-spacing: 0.28em;
+  font-size: clamp(46px, 10vw, 160px);
+  letter-spacing: 0.24em;
   color: #fff;
   opacity: 0.95;
   white-space: nowrap;
 }
+
 
 /* Slide content */
 .sl-hero-slides {
