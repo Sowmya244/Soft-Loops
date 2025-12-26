@@ -1,0 +1,105 @@
+/* =========================
+   SOFT LOOPS – COLLECTIONS
+========================= */
+
+.collections {
+  padding: 96px 24px;
+  background: #f9f7f4;
+}
+
+.collections-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+/* Each collection */
+.collection {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Image strip */
+.collection-images {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.collection-images img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Text content */
+.collection-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin-bottom: 16px;
+  color: #3b2f2f;
+}
+
+.collection-content p {
+  max-width: 420px;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  color: #5c4b4b;
+}
+
+/* CTA */
+.collection-content a {
+  display: inline-block;
+  padding: 14px 36px;
+  border-radius: 999px;
+  background: #3b2f2f;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.collection-content a:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Alternate layout */
+.collection.is-reverse {
+  grid-template-columns: 1fr 1.2fr;
+}
+
+.collection.is-reverse .collection-images {
+  order: 2;
+}
+
+/* Mobile */
+@media (width <= 768px) {
+  .collections {
+    padding: 64px 20px;
+  }
+
+  .collection {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .collection-images {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .collection-images img {
+    height: 160px;
+  }
+
+  .collection-content h3 {
+    font-size: 28px;
+  }
+}
