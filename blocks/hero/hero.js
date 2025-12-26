@@ -93,5 +93,5 @@ export default function decorate(block) {
 
     bgSlides[index].classList.add('is-active');
     textSlides[index].classList.add('is-active');
-  }, 5500);
+  }, 3000);
 }

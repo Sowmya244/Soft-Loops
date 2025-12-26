@@ -85,17 +85,6 @@
    Slide content (CTA area)
 ========================= */
 
-.sl-hero-slides {
-  position: absolute;
-  bottom: 50%;
-  left: 50%;
-  transform: translate(-50%, 40%);
-  z-index: 3;
-  width: 100%;
-  text-align: center;
-}
-
-
 .sl-hero-slide {
   position: absolute;
   width: 100%;
