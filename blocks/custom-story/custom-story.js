@@ -1,62 +1,47 @@
 export default function decorate(block) {
   block.classList.add('custom-story');
 
-  const rows = [...block.children];
-  const scenes = [];
-
-  let currentScene = null;
-
-  rows.forEach((row) => {
-    const img = row.querySelector('img');
-    const link = row.querySelector('a');
-    const text = row.textContent.trim();
-
-    // IMAGE → start new scene
-    if (img) {
-      currentScene = {
-        img,
-        text: '',
-        cta: null,
-      };
-      scenes.push(currentScene);
-      return;
-    }
-
-    if (!currentScene) return;
-
-    // CTA
-    if (link) {
-      currentScene.cta = link;
-      return;
-    }
-
-    // TEXT
-    if (text) {
-      currentScene.text = text;
-    }
-  });
-
+  const rows = [...block.querySelectorAll(':scope > div')];
   block.innerHTML = '';
 
-  scenes.forEach((scene) => {
-    const section = document.createElement('section');
-    section.className = 'custom-story-scene';
+  rows.forEach((row, index) => {
+    const cells = row.querySelectorAll(':scope > div');
+    if (cells.length < 3) return;
+
+    const img = cells[0].querySelector('img');
+    const title = cells[1].textContent.trim();
+    const desc = cells[2].textContent.trim();
+
+    if (!img || !title || !desc) return;
+
+    const scene = document.createElement('section');
+    scene.className = 'custom-story-scene';
+    if (index % 2 === 1) scene.classList.add('is-reverse');
 
     const imageWrap = document.createElement('div');
     imageWrap.className = 'custom-story-image';
-    imageWrap.append(scene.img);
+    imageWrap.append(img);
 
     const content = document.createElement('div');
     content.className = 'custom-story-content';
+    content.innerHTML = `
+      <h3>${title}</h3>
+      <p>${desc}</p>
+    `;
 
-    content.innerHTML = `<p>${scene.text}</p>`;
-    if (scene.cta) content.append(scene.cta);
+    // CTA only on last scene
+    if (index === rows.length - 1) {
+      const cta = document.createElement('a');
+      cta.href = '#';
+      cta.textContent = 'Start Your Custom Crochet Story';
+      content.append(cta);
+    }
 
-    section.append(imageWrap, content);
-    block.append(section);
+    scene.append(imageWrap, content);
+    block.append(scene);
   });
 
-  // Scroll reveal
+  /* reveal animation */
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -65,7 +50,7 @@ export default function decorate(block) {
         }
       });
     },
-    { threshold: 0.35 },
+    { threshold: 0.4 },
   );
 
   block.querySelectorAll('.custom-story-scene').forEach((scene) => {
