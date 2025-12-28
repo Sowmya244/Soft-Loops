@@ -32,7 +32,8 @@ export default function decorate(block) {
     // CTA only on last scene
     if (index === rows.length - 1) {
       const cta = document.createElement('a');
-      cta.href = '#';
+      cta.href = 'custom-request';
+
       cta.textContent = 'Start Your Custom Crochet Story';
       content.append(cta);
     }
