@@ -1,59 +1,101 @@
 /* =========================
-   SOFT LOOPS – COLLECTIONS
+   SOFT LOOPS – COLLECTIONS (CENTER CAROUSEL)
 ========================= */
 
 .collections {
-  padding: 96px 24px;
+  padding: 80px 24px;
   background: #f9f7f4;
 }
 
-.collections-inner {
+/* CARD */
+.collection-card {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 96px;
-}
-
-/* Each collection */
-.collection {
+  background: #fff;
+  border-radius: 32px;
+  padding: 48px;
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 48px;
   align-items: center;
 }
 
-/* Image strip */
-.collection-images {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
+/* =========================
+   CAROUSEL
+========================= */
+
+.collection-carousel {
+  position: relative;
+  overflow: hidden;
 }
 
-.collection-images img {
+.carousel-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+.carousel-slide {
+  min-width: 300px;
+  height: 420px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #eaeaea;
+  transform: scale(0.85);
+  opacity: 0.45;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.carousel-slide img {
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 16px;
 }
 
-/* Text content */
+/* ACTIVE SLIDE */
+.carousel-slide.is-active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* DOTS */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.carousel-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d5d5d5;
+}
+
+.carousel-dots span.active {
+  background: #fc3;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
 .collection-content h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 36px;
+  font-size: 38px;
   margin-bottom: 16px;
   color: #3b2f2f;
 }
 
 .collection-content p {
-  max-width: 420px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
   margin-bottom: 28px;
   color: #5c4b4b;
 }
 
-/* CTA */
 .collection-content a {
   display: inline-block;
   padding: 14px 36px;
@@ -63,40 +105,21 @@
   font-size: 13px;
   letter-spacing: 0.12em;
   text-decoration: none;
-  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-.collection-content a:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
+/* =========================
+   MOBILE
+========================= */
 
-/* Alternate layout */
-.collection.is-reverse {
-  grid-template-columns: 1fr 1.2fr;
-}
-
-.collection.is-reverse .collection-images {
-  order: 2;
-}
-
-/* Mobile */
 @media (width <= 768px) {
-  .collections {
-    padding: 64px 20px;
-  }
-
-  .collection {
+  .collection-card {
     grid-template-columns: 1fr;
-    gap: 32px;
+    padding: 32px;
   }
 
-  .collection-images {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .collection-images img {
-    height: 160px;
+  .carousel-slide {
+    min-width: 240px;
+    height: 300px;
   }
 
   .collection-content h3 {
