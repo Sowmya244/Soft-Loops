@@ -113,6 +113,6 @@ export default function decorate(block) {
     timer = setInterval(() => {
       index = (index + 1) % slides.length;
       update();
-    }, 4000);
+    }, 3000);
   });
 }
