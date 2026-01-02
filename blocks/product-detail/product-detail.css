@@ -46,14 +46,10 @@
   border-color: #000;
 }
 
-.product-thumbnails img:hover {
-  opacity: 0.85;
-}
-
 /* ================= MAIN IMAGE ================= */
 .product-main-image {
   width: 420px;
-  aspect-ratio: 4 / 5;              /* ✅ FORCE SAME SIZE */
+  aspect-ratio: 4 / 5;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   overflow: hidden;
@@ -67,7 +63,7 @@
 .product-main-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;                /* ✅ CROPS DIFFERENT PIXELS */
+  object-fit: cover;
   object-position: center;
 }
 
@@ -92,8 +88,8 @@
 }
 
 .image-modal img {
-  width: min(90vw, 520px);   /* ✅ SAME SIZE FOR ALL IMAGES */
-  aspect-ratio: 4 / 5;       /* ✅ SAME SHAPE AS PDP */
+  width: min(90vw, 520px);
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: 8px;
   cursor: zoom-in;
@@ -103,6 +99,11 @@
 .image-modal img.zoomed {
   transform: scale(1.6);
   cursor: zoom-out;
+}
+
+/* ================= THUMB HOVER (MOVED DOWN) ================= */
+.product-thumbnails img:hover {
+  opacity: 0.85;
 }
 
 /* ================= RIGHT CONTENT ================= */
@@ -204,7 +205,7 @@
 }
 
 /* ================= MOBILE ================= */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .product-layout {
     grid-template-columns: 1fr;
     gap: 36px;
