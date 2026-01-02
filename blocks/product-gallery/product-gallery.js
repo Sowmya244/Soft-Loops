@@ -1,6 +1,8 @@
 export default function decorate(block) {
   block.classList.add('product-gallery');
 
+  const BASE_URL = 'https://main--soft-loops--sowmya244.aem.page/';
+
   const rows = [...block.querySelectorAll(':scope > div')];
   block.innerHTML = '';
 
@@ -8,7 +10,7 @@ export default function decorate(block) {
   grid.className = 'product-gallery-grid';
 
   rows.forEach((row) => {
-    const cells = row.querySelectorAll(':scope > div');
+    const cells = [...row.querySelectorAll(':scope > div')];
     if (cells.length < 6) return;
 
     const img = cells[0].querySelector('img');
@@ -19,6 +21,15 @@ export default function decorate(block) {
     const ctaText = cells[5].textContent.trim();
 
     if (!img || !name) return;
+
+    /* 🔗 Generate PDP URL */
+    const slug = name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .trim();
+
+    const productUrl = `${BASE_URL}${slug}`;
 
     const card = document.createElement('article');
     card.className = 'product-card';
@@ -32,14 +43,21 @@ export default function decorate(block) {
       </svg>
     `;
 
-    wishlist.addEventListener('click', () => {
+    wishlist.addEventListener('click', (e) => {
+      e.stopPropagation();
       wishlist.classList.toggle('is-active');
     });
 
+    /* Image */
     const imageWrap = document.createElement('div');
     imageWrap.className = 'product-image';
     imageWrap.append(img, wishlist);
 
+    imageWrap.addEventListener('click', () => {
+      window.location.href = productUrl;
+    });
+
+    /* Content */
     const content = document.createElement('div');
     content.className = 'product-content';
     content.innerHTML = `
@@ -49,6 +67,12 @@ export default function decorate(block) {
       <p class="product-details">${details}</p>
       <button type="button" class="product-cta">${ctaText}</button>
     `;
+
+    const ctaBtn = content.querySelector('.product-cta');
+    ctaBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.location.href = productUrl;
+    });
 
     card.append(imageWrap, content);
     grid.append(card);
