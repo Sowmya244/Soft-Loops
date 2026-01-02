@@ -32,7 +32,7 @@
 
 .product-thumbnails img {
   width: 60px;
-  height: 76px;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: 6px;
   cursor: pointer;
@@ -46,21 +46,29 @@
   border-color: #000;
 }
 
+.product-thumbnails img:hover {
+  opacity: 0.85;
+}
+
 /* ================= MAIN IMAGE ================= */
 .product-main-image {
   width: 420px;
-  height: 480px;
+  aspect-ratio: 4 / 5;              /* ✅ FORCE SAME SIZE */
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   overflow: hidden;
   cursor: zoom-in;
-  background: #fff;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-main-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;                /* ✅ CROPS DIFFERENT PIXELS */
+  object-position: center;
 }
 
 /* ================= IMAGE MODAL ================= */
@@ -84,20 +92,17 @@
 }
 
 .image-modal img {
-  max-width: 90%;
-  max-height: 90%;
+  width: min(90vw, 520px);   /* ✅ SAME SIZE FOR ALL IMAGES */
+  aspect-ratio: 4 / 5;       /* ✅ SAME SHAPE AS PDP */
+  object-fit: cover;
+  border-radius: 8px;
   cursor: zoom-in;
   transition: transform 0.3s ease;
 }
 
 .image-modal img.zoomed {
-  transform: scale(1.8);
+  transform: scale(1.6);
   cursor: zoom-out;
-}
-
-/* ================= THUMB HOVER ================= */
-.product-thumbnails img:hover {
-  opacity: 0.85;
 }
 
 /* ================= RIGHT CONTENT ================= */
@@ -199,7 +204,7 @@
 }
 
 /* ================= MOBILE ================= */
-@media (width <= 900px) {
+@media (max-width: 900px) {
   .product-layout {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -216,7 +221,6 @@
 
   .product-main-image {
     width: 100%;
-    height: 420px;
   }
 
   .product-details {
